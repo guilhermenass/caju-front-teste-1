@@ -1,12 +1,24 @@
 import Collumns from "./components/Columns";
 import * as S from "./styles";
 import { SearchBar } from "./components/Searchbar";
+import { useFetchRegistrations } from "~/hooks/useFetchRegistrations";
 
 const DashboardPage = () => {
+  const { data, loading, fetchData } = useFetchRegistrations();
+
+  async function handleSearchByDocument(document?: string): Promise<void> {
+    await fetchData(document)
+  }
+
+  if (loading) {
+    // todo: criar componente para loading
+    return <h1>loading...</h1>
+  }
+
   return (
     <S.Container>
-      <SearchBar />
-      <Collumns registrations={[]} />
+      <SearchBar onSearch={(document?: string) => handleSearchByDocument(document)} />
+      <Collumns registrations={data || []} />
     </S.Container>
   );
 };
