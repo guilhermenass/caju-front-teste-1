@@ -1,39 +1,41 @@
-import { ButtonSmall } from "~/components/Buttons";
-import * as S from "./styles";
 import {
-  HiOutlineMail,
-  HiOutlineUser,
   HiOutlineCalendar,
+  HiOutlineMail,
   HiOutlineTrash,
+  HiOutlineUser,
 } from "react-icons/hi";
-import usePutRequest from "~/hooks/usePutRequest";
-import { Registration } from "~/models/registration";
-import useDeleteRequest from "~/hooks/useDeleteRequest";
+import { ButtonSmall } from "~/components/Buttons";
+import { useDeleteRegistration } from "~/hooks/useDeleteRegistration";
+import { useUpdateRegistrationStatus } from "~/hooks/useUpdateRegistrationStatus";
+import { Registration, RegistrationStatus } from "~/models/registration";
+import * as S from "./styles";
 
 type RegistrationCardProps = {
   data: Registration;
 };
 
 const RegistrationCard = ({
-  data: { admissionDate, cpf, email, employeeName, id },
+  data: { admissionDate, cpf, email, employeeName, id, status },
 }: RegistrationCardProps) => {
-  const { sendPutRequest } = usePutRequest();
-  const { sendDeleteRequest } = useDeleteRequest()
+  const { mutate } = useUpdateRegistrationStatus();
 
-  const handleUpdateStatus = (id: string, status: string) => {
+  const { mutate: mutateDeleteRegistration } = useDeleteRegistration();
+
+  const handleUpdateStatus = (id: string, status: RegistrationStatus) => {
     const payload = {
+      id,
       admissionDate,
       email,
       employeeName,
       cpf,
       status,
     };
-    sendPutRequest(`registrations/${id}`, payload);
+    mutate({ id, updatedData: payload });
   };
 
   const handleDelete = (id: string) => {
-    sendDeleteRequest(`registrations/${id}`)
-  }
+    mutateDeleteRegistration({ id });
+  };
 
   return (
     <S.Card>
@@ -50,24 +52,32 @@ const RegistrationCard = ({
         <span>{admissionDate}</span>
       </S.IconAndText>
       <S.Actions>
-        <ButtonSmall
-          onClick={() => handleUpdateStatus(id, 'REPROVED')}
-          bgcolor="rgb(255, 145, 154)"
-        >
-          Reprovar
-        </ButtonSmall>
-        <ButtonSmall
-          onClick={() => handleUpdateStatus(id, 'APPROVED')}
-          bgcolor="rgb(155, 229, 155)"
-        >
-          Aprovar
-        </ButtonSmall>
-        <ButtonSmall
-          onClick={() => handleUpdateStatus(id, 'REVIEW')}
-          bgcolor="#ff8858"
-        >
-          Revisar novamente
-        </ButtonSmall>
+        {status === "REVIEW" && (
+          <ButtonSmall
+            onClick={() => handleUpdateStatus(id, "REPROVED")}
+            bgcolor="rgb(255, 145, 154)"
+          >
+            Reprovar
+          </ButtonSmall>
+        )}
+
+        {status === "REVIEW" && (
+          <ButtonSmall
+            onClick={() => handleUpdateStatus(id, "APPROVED")}
+            bgcolor="rgb(155, 229, 155)"
+          >
+            Aprovar
+          </ButtonSmall>
+        )}
+
+        {(status === "APPROVED" || status === "REPROVED") && (
+          <ButtonSmall
+            onClick={() => handleUpdateStatus(id, "REVIEW")}
+            bgcolor="#ff8858"
+          >
+            Revisar novamente
+          </ButtonSmall>
+        )}
 
         <HiOutlineTrash onClick={() => handleDelete(id)} />
       </S.Actions>
