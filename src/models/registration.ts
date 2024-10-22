@@ -1,4 +1,4 @@
-type RegistrationStatus = "APROVED" | "REVIEW" | "REPROVED";
+export type RegistrationStatus = "APPROVED" | "REVIEW" | "REPROVED";
 
 export interface Registration {
   id: string;
