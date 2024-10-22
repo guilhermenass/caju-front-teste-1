@@ -15,10 +15,11 @@ export async function fetchRegistrationsByDocument(
   return response.data;
 }
 
-export async function updateRegistration(
-  url: string,
+export async function upgradeRegistration(
+  id: string,
   payload: Registration
 ): Promise<Registration> {
+  const url = `/registrations/${id}`
   const response = await instance.put<Registration>(url, payload);
   return response.data;
 }
