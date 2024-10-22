@@ -1,24 +1,33 @@
+import { useState } from "react";
+import { useAllRegistrations } from "~/hooks/useAllRegistrations";
+import { useRegistrationsByDocument } from "~/hooks/useRegistrationsByDocument";
 import Collumns from "./components/Columns";
-import * as S from "./styles";
 import { SearchBar } from "./components/Searchbar";
-import { useFetchRegistrations } from "~/hooks/useFetchRegistrations";
+import * as S from "./styles";
 
 const DashboardPage = () => {
-  const { data, loading, fetchData } = useFetchRegistrations();
+  const [document, setDocument] = useState("");
+  const { data, isLoading } = useAllRegistrations();
 
-  async function handleSearchByDocument(document?: string): Promise<void> {
-    await fetchData(document)
+  const { data: registrationsByDocumentData } =
+    useRegistrationsByDocument(document);
+
+  async function handleSearchByDocument(document: string): Promise<void> {
+    setDocument(document);
   }
 
-  if (loading) {
-    // todo: criar componente para loading
-    return <h1>loading...</h1>
+  if (isLoading) {
+    return <h1>loading...</h1>;
   }
+
+  const registrations = document ? registrationsByDocumentData : data
 
   return (
     <S.Container>
-      <SearchBar onSearch={(document?: string) => handleSearchByDocument(document)} />
-      <Collumns registrations={data || []} />
+      <SearchBar
+        onSearch={(document: string) => handleSearchByDocument(document)}
+      />
+      <Collumns registrations={registrations || []} />
     </S.Container>
   );
 };

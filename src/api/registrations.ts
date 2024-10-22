@@ -14,3 +14,17 @@ export async function fetchRegistrationsByDocument(
   );
   return response.data;
 }
+
+export async function updateRegistration(
+  id: string,
+  payload: Registration
+): Promise<Registration> {
+  const url = `/registrations/${id}`
+  const response = await instance.put<Registration>(url, payload);
+  return response.data;
+}
+
+export async function deleteRegistration(id: string): Promise<Registration> {
+  const response = await instance.delete(`/registrations/${id}`);
+  return response.data;
+}
