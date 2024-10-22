@@ -1,10 +1,10 @@
 import Collumns from "./components/Columns";
 import * as S from "./styles";
 import { SearchBar } from "./components/Searchbar";
-import { useFetchRegistrations } from "~/hooks/useFetchRegistrations";
+import { useRegistrations } from "~/hooks/useRegistrations";
 
 const DashboardPage = () => {
-  const { data, isLoading } = useFetchRegistrations();
+  const { data, isLoading } = useRegistrations();
 
   async function handleSearchByDocument(document?: string): Promise<void> {
     // await fetchData(document)
