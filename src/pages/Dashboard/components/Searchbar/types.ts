@@ -1,5 +1,5 @@
 export type SearchbarProps = {
-  onSearch: (document?: string) => void;
+  onSearch: (document: string) => void;
 };
 
 
