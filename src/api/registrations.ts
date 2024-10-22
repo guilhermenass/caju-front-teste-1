@@ -15,7 +15,7 @@ export async function fetchRegistrationsByDocument(
   return response.data;
 }
 
-export async function upgradeRegistration(
+export async function updateRegistration(
   id: string,
   payload: Registration
 ): Promise<Registration> {

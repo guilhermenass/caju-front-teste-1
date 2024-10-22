@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { upgradeRegistration } from "~/api/registrations";
+import { updateRegistration } from "~/api/registrations";
 import { Registration } from "~/models/registration";
 
 export function useUpdateRegistrationStatus() {
@@ -11,7 +11,7 @@ export function useUpdateRegistrationStatus() {
     }: {
       id: string;
       updatedData: Registration;
-    }) => upgradeRegistration(id, updatedData),
+    }) => updateRegistration(id, updatedData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["registrations"] });
       queryClient.invalidateQueries({ queryKey: ["registrationsByDocument"] });
