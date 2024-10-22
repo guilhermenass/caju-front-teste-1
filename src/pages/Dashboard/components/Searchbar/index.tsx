@@ -22,7 +22,7 @@ export const SearchBar = ({ onSearch }: SearchbarProps) => {
     }
 
     if (document.length === 0) {
-      onSearch();
+      onSearch("");
     }
   };
 
