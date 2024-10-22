@@ -1,44 +1,24 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
-  fetchAllRegistrations,
-  fetchRegistrationsByDocument,
+  fetchAllRegistrations
 } from "~/api/registrations";
 import { Registration } from "~/models/registration";
 
 type UseFetchRegistrationsData = {
-  loading: boolean;
+  isLoading: boolean;
   data: Registration[] | undefined;
-  fetchData: (document?: string) => Promise<void>;
   error: unknown;
 };
 
 export function useFetchRegistrations(): UseFetchRegistrationsData {
-  const [data, setData] = useState<Registration[]>();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<unknown>(null);
-
-  async function fetchData(document?: string) {
-    try {
-      const response = document
-        ? await fetchRegistrationsByDocument(document)
-        : await fetchAllRegistrations();
-      setData(response);
-      setLoading(false);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["registrations"],
+    queryFn: fetchAllRegistrations,
+  });
 
   return {
     data,
     error,
-    loading,
-    fetchData,
+    isLoading,
   };
 }

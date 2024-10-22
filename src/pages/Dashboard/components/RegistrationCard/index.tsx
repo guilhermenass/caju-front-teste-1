@@ -8,6 +8,7 @@ import {
 } from "react-icons/hi";
 import usePutRequest from "~/hooks/usePutRequest";
 import { Registration } from "~/models/registration";
+import useDeleteRequest from "~/hooks/useDeleteRequest";
 
 type RegistrationCardProps = {
   data: Registration;
@@ -17,6 +18,7 @@ const RegistrationCard = ({
   data: { admissionDate, cpf, email, employeeName, id },
 }: RegistrationCardProps) => {
   const { sendPutRequest } = usePutRequest();
+  const { sendDeleteRequest } = useDeleteRequest()
 
   const handleUpdateStatus = (id: string, status: string) => {
     const payload = {
@@ -28,6 +30,10 @@ const RegistrationCard = ({
     };
     sendPutRequest(`registrations/${id}`, payload);
   };
+
+  const handleDelete = (id: string) => {
+    sendDeleteRequest(`registrations/${id}`)
+  }
 
   return (
     <S.Card>
@@ -63,7 +69,7 @@ const RegistrationCard = ({
           Revisar novamente
         </ButtonSmall>
 
-        <HiOutlineTrash />
+        <HiOutlineTrash onClick={() => handleDelete(id)} />
       </S.Actions>
     </S.Card>
   );
