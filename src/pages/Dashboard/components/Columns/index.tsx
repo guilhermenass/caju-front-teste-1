@@ -8,10 +8,10 @@ const allColumns = [
   { status: "REPROVED", title: "Reprovado" },
 ];
 
-type Props = {
+type ColumnsProps = {
   registrations: Registration[];
 };
-const Collumns = (props: Props) => {
+const Columns = ({registrations}: ColumnsProps) => {
   return (
     <S.Container>
       {allColumns.map((collum) => {
@@ -22,7 +22,7 @@ const Collumns = (props: Props) => {
                 {collum.title}
               </S.TitleColumn>
               <S.CollumContent>
-                {props?.registrations
+                {registrations
                   ?.filter(
                     (registration) => registration.status === collum.status
                   )
@@ -42,4 +42,4 @@ const Collumns = (props: Props) => {
     </S.Container>
   );
 };
-export default Collumns;
+export default Columns;

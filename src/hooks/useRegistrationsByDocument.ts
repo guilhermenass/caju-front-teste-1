@@ -6,13 +6,12 @@ type UseRegistrationsByDocumentData = {
   isLoading: boolean;
   data: Registration[] | undefined;
   error: unknown;
-  refetch: () => void;
 };
 
 export function useRegistrationsByDocument(
   document: string
 ): UseRegistrationsByDocumentData {
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["registrationsByDocument", document],
     queryFn: () => fetchRegistrationsByDocument(document),
     enabled: !!document,
@@ -22,6 +21,5 @@ export function useRegistrationsByDocument(
     data,
     error,
     isLoading,
-    refetch,
   };
 }
