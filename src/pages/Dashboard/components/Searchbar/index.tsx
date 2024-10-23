@@ -2,12 +2,13 @@ import { HiRefresh } from "react-icons/hi";
 import { useHistory } from "react-router-dom";
 import Button from "~/components/Buttons";
 import { IconButton } from "~/components/Buttons/IconButton";
-import TextField from "~/components/TextField";
 import routes from "~/router/routes";
 import * as S from "./styles";
 import { SearchbarProps, VALID_DOCUMENT_LENGTH } from "./types";
 
-export const SearchBar = ({ onSearch }: SearchbarProps) => {
+import TextField from "~/components/TextField";
+
+export const SearchBar = ({ onSearch, onRefetch }: SearchbarProps) => {
   const history = useHistory();
 
   const goToNewAdmissionPage = () => {
@@ -26,6 +27,10 @@ export const SearchBar = ({ onSearch }: SearchbarProps) => {
     }
   };
 
+  const handleRefetch = () => {
+    onRefetch();
+  };
+
   return (
     <S.Container>
       <TextField
@@ -34,7 +39,7 @@ export const SearchBar = ({ onSearch }: SearchbarProps) => {
       />
 
       <S.Actions>
-        <IconButton aria-label="refetch">
+        <IconButton aria-label="refetch" onClick={handleRefetch}>
           <HiRefresh />
         </IconButton>
         <Button onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>

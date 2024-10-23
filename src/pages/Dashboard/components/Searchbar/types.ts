@@ -1,5 +1,6 @@
 export type SearchbarProps = {
   onSearch: (document: string) => void;
+  onRefetch: () => void;
 };
 
 
