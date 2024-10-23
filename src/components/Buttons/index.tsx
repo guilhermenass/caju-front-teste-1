@@ -7,7 +7,8 @@ const Button = styled.button<{ primary: boolean }>`
   border: none;
   border-radius: 36px;
   padding: 8px 32px;
-  background-color: ${({ primary }) => (primary ? "green" : "red")};
+  background-color: ${({ primary = true }) =>
+    primary ? "#64a98c" : "#e80537"};
 
   cursor: pointer;
   height: 56px;

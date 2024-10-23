@@ -10,9 +10,9 @@ type ModalProps = {
 
 const Modal: React.FC<ModalProps> = ({
   isOpen,
+  message,
   onClose,
   onConfirm,
-  message,
 }) => {
   if (!isOpen) return null; // Não renderiza a modal se não estiver aberta
 
@@ -22,8 +22,10 @@ const Modal: React.FC<ModalProps> = ({
         <h2>Confirmação</h2>
         <p>{message}</p>
         <S.Buttons>
-          <Button primary onClick={onConfirm}>Confirmar</Button>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button primary={false} onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button onClick={onConfirm}>Confirmar</Button>
         </S.Buttons>
       </S.ModalContent>
     </S.Modal>
