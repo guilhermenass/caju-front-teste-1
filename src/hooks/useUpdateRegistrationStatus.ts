@@ -16,8 +16,6 @@ export function useUpdateRegistrationStatus() {
       queryClient.invalidateQueries({ queryKey: ["registrations"] });
       queryClient.invalidateQueries({ queryKey: ["registrationsByDocument"] });
     },
-    onError: (error) => {
-      console.error("Erro ao atualizar o registro:", error);
-    },
+
   });
 }
