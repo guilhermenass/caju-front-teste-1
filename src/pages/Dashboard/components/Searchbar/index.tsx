@@ -8,7 +8,10 @@ import { SearchbarProps, VALID_DOCUMENT_LENGTH } from "./types";
 
 import TextField from "~/components/TextField";
 
-export const SearchBar = ({ onSearch, onRefetch }: SearchbarProps) => {
+export const SearchBar = ({
+  onSearch,
+  onRefetch,
+}: SearchbarProps) => {
   const history = useHistory();
 
   const goToNewAdmissionPage = () => {
@@ -16,13 +19,13 @@ export const SearchBar = ({ onSearch, onRefetch }: SearchbarProps) => {
   };
 
   const handleDocumentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const document = event.target.value;
+    const documentInputValue = event.target.value;
 
-    if (document.length === VALID_DOCUMENT_LENGTH) {
-      onSearch(document);
+    if (documentInputValue.length === VALID_DOCUMENT_LENGTH) {
+      onSearch(documentInputValue);
     }
 
-    if (document.length === 0) {
+    if (documentInputValue.length === 0) {
       onSearch("");
     }
   };

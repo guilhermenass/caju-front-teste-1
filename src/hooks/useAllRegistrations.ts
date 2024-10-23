@@ -10,7 +10,7 @@ type UseAllRegistrationsData = {
 };
 
 export function useAllRegistrations(): UseAllRegistrationsData {
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch, isRefetching } = useQuery({
     queryKey: ["registrations"],
     queryFn: fetchAllRegistrations,
   });
@@ -18,7 +18,7 @@ export function useAllRegistrations(): UseAllRegistrationsData {
   return {
     data,
     error,
-    isLoading,
+    isLoading: isLoading || isRefetching,
     refetch
   };
 }

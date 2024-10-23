@@ -4,6 +4,7 @@ import { useRegistrationsByDocument } from "~/hooks/useRegistrationsByDocument";
 import Columns from "./components/Columns";
 import { SearchBar } from "./components/Searchbar";
 import * as S from "./styles";
+import Loading from "~/components/Loading";
 
 const DashboardPage = () => {
   const [document, setDocument] = useState("");
@@ -15,7 +16,7 @@ const DashboardPage = () => {
 
   const {
     data: registrationsByDocumentData,
-    isLoading: isLoadingRegistrationsByDocument
+    isLoading: isLoadingRegistrationsByDocument,
   } = useRegistrationsByDocument(document);
 
   async function handleSearchByDocument(document: string): Promise<void> {
@@ -23,13 +24,16 @@ const DashboardPage = () => {
   }
 
   const handleRefetchAll = () => {
-    refetchAllRegistrations()
+    refetchAllRegistrations();
   };
 
-  const isLoading = isLoadingAllRegistrations || !document ? isLoadingAllRegistrations : isLoadingRegistrationsByDocument;
+  const isLoading =
+    isLoadingAllRegistrations || !document
+      ? isLoadingAllRegistrations
+      : isLoadingRegistrationsByDocument;
 
   if (isLoading) {
-    return <h1>loading...</h1>;
+    return <Loading />;
   }
 
   const registrations =
