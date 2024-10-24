@@ -1,12 +1,12 @@
 import { useState } from "react";
+import Loading from "~/components/Loading";
 import { useAllRegistrations } from "~/hooks/useAllRegistrations";
 import { useRegistrationsByDocument } from "~/hooks/useRegistrationsByDocument";
 import Columns from "./components/Columns";
 import { SearchBar } from "./components/Searchbar";
 import * as S from "./styles";
-import Loading from "~/components/Loading";
 
-const DashboardPage = () => {
+const Dashboard = () => {
   const [document, setDocument] = useState("");
   const {
     data,
@@ -51,4 +51,4 @@ const DashboardPage = () => {
     </S.Container>
   );
 };
-export default DashboardPage;
+export default Dashboard;
