@@ -7,8 +7,8 @@ export default {
     "^.+\\.tsx?$": ["ts-jest", { isolatedModules: true }],
     "^.+\\.(js|jsx)$": "babel-jest",
   },
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapper: {
     "^~/(.+)": "<rootDir>/src/$1",
   },
-//   setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
 };

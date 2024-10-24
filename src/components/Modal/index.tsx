@@ -1,5 +1,5 @@
 import Button from "../Buttons";
-import * as S from "./styles"; // Importar estilos se necessário
+import * as S from "./styles";
 
 type ModalProps = {
   isOpen: boolean;
@@ -8,13 +8,8 @@ type ModalProps = {
   message: string;
 };
 
-const Modal: React.FC<ModalProps> = ({
-  isOpen,
-  message,
-  onClose,
-  onConfirm,
-}) => {
-  if (!isOpen) return null; // Não renderiza a modal se não estiver aberta
+const Modal = ({ isOpen, message, onClose, onConfirm }: ModalProps) => {
+  if (!isOpen) return null;
 
   return (
     <S.Modal>
