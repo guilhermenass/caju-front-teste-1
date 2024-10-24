@@ -3,13 +3,13 @@ export const validateEmail = (email: string = "") => {
   return !!email && emailRegex.test(email);
 };
 
-export const removeMask = (value: string = '') => {
+export const removeMask = (value: string = "") => {
   return value.replace(/\D/g, "");
-}
+};
 
 export const validateDocument = (document: string = ""): boolean => {
   if (!document) return false;
-  document = removeMask(document)
+  document = removeMask(document);
   if (document.length !== 11 || /^(\d)\1+$/.test(document)) return false;
 
   const calcCheckDigit = (base: string, factor: number) => {
@@ -42,5 +42,12 @@ export const validateFullName = (fullName: string = ""): boolean => {
 
 export const formatToBrazilianDate = (date: string = "") => {
   if (!date) return "";
-  return new Date(date).toLocaleDateString("pt-BR", { timeZone: "UTC" });
+
+  const parsedDate = new Date(date);
+
+  if (isNaN(parsedDate.getTime())) {
+    throw new Error("Invalid date format");
+  }
+
+  return parsedDate.toLocaleDateString("pt-BR", { timeZone: "UTC" });
 };
