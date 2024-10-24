@@ -1,19 +1,32 @@
-import TextField from "~/components/TextField";
-import * as S from "./styles";
-import Button from "~/components/Buttons";
-import { HiOutlineArrowLeft } from "react-icons/hi";
-import { IconButton } from "~/components/Buttons/IconButton";
-import { useHistory } from "react-router-dom";
-import routes from "~/router/routes";
+import { useMask } from "@react-input/mask";
 import { useRef, useState } from "react";
-import { validateDocument, validateEmail, validateFullName } from "~/utils";
+import { HiOutlineArrowLeft } from "react-icons/hi";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import Button from "~/components/Buttons";
+import { IconButton } from "~/components/Buttons/IconButton";
+import Loading from "~/components/Loading";
+import TextField from "~/components/TextField";
+import { useCreateRegistration } from "~/hooks/useCreateRegistration";
+import { CreateRegistrationRequest } from "~/models/registration";
+import routes from "~/router/routes";
+import {
+  formatToBrazilianDate,
+  validateDocument,
+  validateEmail,
+  validateFullName,
+} from "~/utils";
+import * as S from "./styles";
 
 const NewUserPage = () => {
+  const documentRef = useMask({
+    mask: "___.___.___-__",
+    replacement: { _: /\d/ },
+  });
   const history = useHistory();
   const emailRef = useRef<HTMLInputElement>(null);
   const [emailError, setEmailError] = useState<string>("");
 
-  const documentRef = useRef<HTMLInputElement>(null);
   const [documentError, setDocumentError] = useState<string>("");
 
   const fullNameRef = useRef<HTMLInputElement>(null);
@@ -22,14 +35,36 @@ const NewUserPage = () => {
   const admissionDateRef = useRef<HTMLInputElement>(null);
   const [admissionDateError, setAdmissionDateError] = useState<string>("");
 
+  const { mutate, isPending } = useCreateRegistration();
+
   const handleRedirectToHome = () => {
     history.push(routes.dashboard);
+  };
+
+  const handleSaveUser = (payload: CreateRegistrationRequest) => {
+    mutate(
+      { payload },
+      {
+        onSuccess: () => {
+          toast.success("Usuário cadastrado com sucesso.");
+          handleRedirectToHome();
+        },
+        onError: () => {
+          toast.error("Ocorreu um erro ao tentar cadastrar um novo usuário.");
+        },
+      }
+    );
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const isValidFullName = validateFullName(fullNameRef.current?.value);
+    const admissionDateValue = admissionDateRef.current?.value;
+    const documentValue = documentRef.current?.value;
+    const emailValue = emailRef.current?.value;
+    const fullNameValue = fullNameRef.current?.value;
+
+    const isValidFullName = validateFullName(fullNameValue);
     if (!isValidFullName) {
       setFullNameError("O nome completo é inválido");
       return;
@@ -41,19 +76,31 @@ const NewUserPage = () => {
       return;
     }
     setEmailError("");
-    const isValidDocument = validateDocument(documentRef.current?.value);
+    const isValidDocument = validateDocument(documentValue);
     if (!isValidDocument) {
       setDocumentError("CPF inválido.");
       return;
     }
     setDocumentError("");
 
-    if (!admissionDateRef.current?.value) {
-      setAdmissionDateError("A data de admissão é obrigatória.")
+    if (!admissionDateValue) {
+      setAdmissionDateError("A data de admissão é obrigatória.");
       return;
     }
-    setAdmissionDateError("")
+    setAdmissionDateError("");
+    const payload: CreateRegistrationRequest = {
+      admissionDate: formatToBrazilianDate(admissionDateValue),
+      cpf: documentValue || "",
+      email: emailValue || "",
+      employeeName: fullNameValue || "",
+      status: "REVIEW",
+    };
+    handleSaveUser(payload);
   };
+
+  if (isPending) {
+    return <Loading />;
+  }
 
   return (
     <S.Container>
@@ -76,11 +123,13 @@ const NewUserPage = () => {
             error={emailError}
           />
           <TextField
-            placeholder="CPF"
-            label="CPF"
             ref={documentRef}
+            placeholder="Digite um CPF válido"
+            type="text"
+            label="CPF"
             error={documentError}
           />
+
           <TextField
             label="Data de admissão"
             type="date"

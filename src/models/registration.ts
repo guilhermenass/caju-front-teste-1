@@ -8,3 +8,5 @@ export interface Registration {
   status: RegistrationStatus;
   cpf: string;
 }
+
+export interface CreateRegistrationRequest extends Omit<Registration, 'id'> {}

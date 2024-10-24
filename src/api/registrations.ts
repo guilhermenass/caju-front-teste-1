@@ -1,4 +1,4 @@
-import { Registration } from "~/models/registration";
+import { CreateRegistrationRequest, Registration } from "~/models/registration";
 import instance from "./axios";
 
 const BASE_URL = '/registrations'
@@ -31,7 +31,7 @@ export async function deleteRegistration(id: string): Promise<Registration> {
   return response.data;
 }
 
-export async function createRegistration(payload: Registration): Promise<Registration> {
+export async function createRegistration(payload: CreateRegistrationRequest): Promise<Registration> {
   const response = await instance.post(BASE_URL, payload)
   return response.data
 }

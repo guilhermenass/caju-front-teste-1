@@ -11,30 +11,32 @@ const allColumns = [
 type ColumnsProps = {
   registrations: Registration[];
 };
-const Columns = ({registrations}: ColumnsProps) => {
+const Columns = ({ registrations }: ColumnsProps) => {
+
   return (
     <S.Container>
-      {allColumns.map((collum) => {
+      {allColumns.map((column) => {
+        const filteredRegistrations = registrations.filter(
+          (registration) => registration.status === column.status
+        );
         return (
-          <S.Column status={collum.status} key={collum.title}>
+          <S.Column status={column.status} key={column.title}>
             <>
-              <S.TitleColumn status={collum.status}>
-                {collum.title}
+              <S.TitleColumn status={column.status}>
+                {column.title}
               </S.TitleColumn>
-              <S.CollumContent>
-                {registrations
-                  ?.filter(
-                    (registration) => registration.status === collum.status
-                  )
-                  .map((registration) => {
-                    return (
-                      <RegistrationCard
-                        data={registration}
-                        key={registration.id}
-                      />
-                    );
-                  })}
-              </S.CollumContent>
+              <S.ColumnContent>
+                {filteredRegistrations.length > 0 ? (
+                  filteredRegistrations.map((registration) => (
+                    <RegistrationCard
+                      data={registration}
+                      key={registration.id}
+                    />
+                  ))
+                ) : (
+                  <S.EmptyState>Não há registros neste status.</S.EmptyState>
+                )}
+              </S.ColumnContent>
             </>
           </S.Column>
         );

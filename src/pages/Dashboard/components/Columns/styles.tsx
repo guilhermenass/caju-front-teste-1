@@ -39,7 +39,11 @@ export const TitleColumn = styled.h3<{ status: any }>`
   margin: 24px;
 `;
 
-export const CollumContent = styled.div`
+export const ColumnContent = styled.div`
   overflow: auto;
   max-height: 85%;
 `;
+
+export const EmptyState = styled.h3`
+  padding: 0 24px;
+`

@@ -800,6 +800,18 @@
   resolved "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.25.tgz"
   integrity sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==
 
+"@react-input/core@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@react-input/core/-/core-1.0.18.tgz#a5089b6e29be6a99a1f40058b4ee4e783f19d0ae"
+  integrity sha512-P7OCPZkBU3TjwSkk6NBPvAM5k91NFjFw9HD6a0iuE1eADYjPnlxoDmdfP4icVPloryW2wlhVKb2S0LVrkDaFYQ==
+
+"@react-input/mask@^1.2.11":
+  version "1.2.11"
+  resolved "https://registry.yarnpkg.com/@react-input/mask/-/mask-1.2.11.tgz#a0f56dd265580908d2a9f1b0de8cf9e2496009fa"
+  integrity sha512-CakG0tSkDU9ZtvKTri1YQWoM6Y7UpMxrJPHkJfKroMOsVrPaGlc6eEeIv5pUHewQOJArVhG4sfbT1LPjplMUFg==
+  dependencies:
+    "@react-input/core" "^1.0.18"
+
 "@rollup/rollup-android-arm-eabi@4.18.0":
   version "4.18.0"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.18.0.tgz#bbd0e616b2078cd2d68afc9824d1fadb2f2ffd27"
