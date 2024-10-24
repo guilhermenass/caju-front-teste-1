@@ -3,9 +3,13 @@ export const validateEmail = (email: string = "") => {
   return !!email && emailRegex.test(email);
 };
 
+export const removeMask = (value: string = '') => {
+  return value.replace(/\D/g, "");
+}
+
 export const validateDocument = (document: string = ""): boolean => {
   if (!document) return false;
-  document = document.replace(/\D/g, "");
+  document = removeMask(document)
   if (document.length !== 11 || /^(\d)\1+$/.test(document)) return false;
 
   const calcCheckDigit = (base: string, factor: number) => {

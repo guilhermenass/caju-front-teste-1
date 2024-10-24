@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   HiOutlineCalendar,
   HiOutlineMail,
@@ -5,14 +6,12 @@ import {
   HiOutlineUser,
 } from "react-icons/hi";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { ButtonSmall } from "~/components/Buttons";
+import Modal from "~/components/Modal";
 import { useDeleteRegistration } from "~/hooks/useDeleteRegistration";
 import { useUpdateRegistrationStatus } from "~/hooks/useUpdateRegistrationStatus";
 import { Registration, RegistrationStatus } from "~/models/registration";
 import * as S from "./styles";
-import Modal from "~/components/Modal";
-import { useState } from "react";
 
 type RegistrationCardProps = {
   data: Registration;

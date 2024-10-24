@@ -21,22 +21,22 @@ export const SearchBar = ({ onSearch, onRefetch }: SearchbarProps) => {
   const [documentError, setDocumentError] = useState<string>("");
 
   const goToNewAdmissionPage = () => {
-    history.push(routes.newUser);
+    history.push(routes.registerAdmission);
   };
 
   const handleDocumentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
     const documentWithoutMask = event.target.value.replace(/\D/g, "");
 
+    
     if (documentWithoutMask.length === VALID_DOCUMENT_LENGTH) {
       onSearch(documentWithoutMask);
-      return
+      return;
     }
     if (documentWithoutMask.length === 0) {
       onSearch("");
-      return
+      return;
     }
-    setDocumentError("CPF precisa ter 11 números")
+    setDocumentError("CPF precisa ter 11 números");
   };
 
   const handleRefetch = () => {
